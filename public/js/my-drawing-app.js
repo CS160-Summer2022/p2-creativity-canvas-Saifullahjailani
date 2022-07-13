@@ -1,5 +1,13 @@
 /* The code for our drawing application! 
 Feel free to delete any/all of it and replace with your own functionality. */
+function download(fileName){
+    var fileName = fileName + ".svg";
+    var url = "data:image/svg+xml;utf8," + encodeURIComponent(paper.project.exportSVG({asString:true}));
+    var link = document.createElement("a");
+    link.download = fileName;
+    link.href = url;
+    link.click();
+}
 
 function Brush(style) {
     this.style = style
@@ -32,6 +40,10 @@ function Rectangle(style) {
         this.shape = new Shape.Rectangle(this.start, this.end);
         this.shape.style = this.style;
     }
+
+    this.onMouseUp = function(event){
+
+    }
 }
 
 function Ellipse(style) {
@@ -62,6 +74,10 @@ function Ellipse(style) {
         });
         this.shape.style = this.style;
     }
+
+    this.onMouseUp = function(event){
+        
+    }
 }
 
 
@@ -82,6 +98,10 @@ function Line(style) {
         this.end = event.point;
         this.shape = new Path.Line(this.start, this.end);
         this.shape.style = this.style;
+    }
+
+    this.onMouseUp = function(event){
+        
     }
 }
 
@@ -105,6 +125,7 @@ function Select() {
 
             if (res.item.selected) {
                 this.resize = true;
+                return;
             }
             
 
@@ -146,9 +167,59 @@ function Select() {
 
         }
     }
+
+    this.onMouseUp = function(event){
+        
+    }
 }
 
-var v = new Ellipse({
+
+
+function Circle(style) {
+    this.style = style
+
+    this.onMouseDown = function (event) {
+        this.start = event.point;
+        this.end = event.point;
+        this.shape = new Path.Line(this.start, this.end);
+        this.shape.strokeWidth = 3;
+        this.shape.strokeColor = "red";
+        this.shape.strokeCap = "round";
+        this.shape.dashArray = [10, 12];
+
+
+        var dist = this.end - this.start;
+        this.circle = new Path.Circle(this.start, dist.length);
+        this.circle.style = this.style;
+
+
+    }
+
+    this.onMouseDrag = function (event) {
+        this.shape.remove();
+        this.circle.remove();
+        this.end = event.point;
+        this.shape = new Path.Line(this.start, this.end);
+        this.shape.strokeWidth = 3;
+        this.shape.strokeColor = "red";
+        this.shape.strokeCap = "round";
+        this.shape.dashArray = [10, 12];
+
+
+        var dist = this.end - this.start;
+        console.log(dist.length);
+        this.circle = new Path.Circle(this.start, dist.length);
+        this.circle.style = this.style;
+
+    }
+
+    this.onMouseUp = function(event){
+        this.shape.remove();
+    }
+
+}
+
+var v = new Circle({
     strokeWidth: 10,
     strokeColor: "black",
 })
@@ -166,6 +237,9 @@ tool.onMouseDown = function (event) { //This code in this function is called whe
 tool.onMouseDrag = function (event) {
     b.onMouseDrag(event);
 }
+tool.onMouseUp = function(event){
+    b.onMouseUp(event);
+}
 
 var curr = v;
 var next = b;
@@ -176,4 +250,26 @@ $("#default").click(function () {
 
 $("#thick-green").click(function () {
     b = v;
+});
+
+
+
+/*
+<input type="file" id="input" multiple>
+*/
+
+var inp = document.getElementById("input");
+input.addEventListener('change', function(e){
+    console.log(inp.files);
+    var reader = new FileReader();
+    reader.onload = function () {
+        project.importSVG(reader.result);
+    }
+      reader.readAsText(inp.files[0]);
+});
+
+inp.style.display = 'none';
+/*Change sub to the id of the clickable load icon*/
+$("#sub").click(function(e){
+    inp.click();
 });
