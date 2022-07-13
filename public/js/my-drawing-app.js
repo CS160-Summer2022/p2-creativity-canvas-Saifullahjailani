@@ -87,26 +87,68 @@ function Line(style) {
 
 function Select() {
 
+    this.bounds = null;
+    this.move = false;
+    this.resize = false;
+    this.selected = false;
+
+
     this.onMouseDown = function (event) {
-        var res = project.hitTest(event.point);
-        if(res != null){
+
+        var res = project.hitTest(event.point, { fill: true, stroke: true, tolerance: 5 });
+
+        if (res != null) {
+
+            if(this.bounds != null && this.bounds.selected){
+                this.bounds.remove();
+            }
+
+            if (res.item.selected) {
+                this.resize = true;
+            }
+            
+
             this.item = res.item;
-            this.box = this.item.bounds.clone();
-            this.box.style = {
-                strokeColor: "blue",
-                
+            this.bounds = new Path.Rectangle(this.item.strokeBounds);
+            this.bounds.strokeWidth = 3;
+            this.bounds.strokeColor = "blue";
+            this.bounds.strokeCap = "round";
+            this.bounds.dashArray = [10, 12];
+            this.bounds.selected = true;
+
+            this.selected = true;
+
+
+        }
+        if (this.selected) {
+            if (this.bounds.contains(event.point)) {
+                this.move = true;
+            } else {
+                this.selected = false;
+                this.resize = false;
+                this.move = false;
             }
         }
-        
-        
+
+        if (!this.selected && this.bounds != null) {
+            this.bounds.remove();
+        }
+
     }
 
     this.onMouseDrag = function (event) {
-        
+        if (this.bounds != null && this.selected) {
+            if (this.move) {
+                this.item.position = this.item.position + event.point - event.lastPoint;
+                this.bounds.position = this.item.position;
+            }
+            
+
+        }
     }
 }
 
-var v = new Rectangle({
+var v = new Ellipse({
     strokeWidth: 10,
     strokeColor: "black",
 })
@@ -128,10 +170,10 @@ tool.onMouseDrag = function (event) {
 var curr = v;
 var next = b;
 
-$("#default").click(function(){
+$("#default").click(function () {
     b = s;
 });
 
-$("#thick-green").click(function(){
+$("#thick-green").click(function () {
     b = v;
 });
