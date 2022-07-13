@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <!-- <meta http-equiv="refresh" content="12;url=main.html" /> -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
+
+    <style>
+      /* button {
+        border: none;
+      } */
+      .palette {
+        background-color: gainsboro;
+        height: 416.45px;
+        width: 56.52px;
+        margin: 14px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .color {
+        width: 47.66px;
+        height: 48.7px;
+      }
+
+      .arrow-container {
+        display: flex;
+        height: 30px;
+      }
+
+      .method-button {
+        width: 50.09px;
+        height: 50.09px;
+      }
+
+      .countdown {
+        display: grid;
+        margin: 1em auto;
+        width: 20em;
+        height: 20em;
+      }
+      .countdown::after {
+        grid-column: 1;
+        grid-row: 1;
+        place-self: center;
+        font: 2em/ 2 ubuntu mono, consolas, monaco, monospace;
+        animation: num 12s steps(1);
+        content: counter(s, decimal-leading-zero);
+      }
+      @keyframes num {
+        0% {
+          counter-reset: s 60;
+        }
+        8% {
+          counter-reset: s 55;
+        }
+        16% {
+          counter-reset: s 50;
+        }
+        24% {
+          counter-reset: s 45;
+        }
+        32% {
+          counter-reset: s 40;
+        }
+        40% {
+          counter-reset: s 35;
+        }
+        48% {
+          counter-reset: s 30;
+        }
+        56% {
+          counter-reset: s 25;
+        }
+        64% {
+          counter-reset: s 20;
+        }
+        72% {
+          counter-reset: s 15;
+        }
+        80% {
+          counter-reset: s 10;
+        }
+        88% {
+          counter-reset: s 5;
+        }
+        100% {
+          counter-reset: s 0;
+        }
+      }
+      svg {
+        grid-column: 1;
+        grid-row: 1;
+      }
+      [r] {
+        fill: none;
+        stroke: silver;
+      }
+      [r] + [r] {
+        transform: rotate(-90deg);
+        stroke-linecap: round;
+        stroke: #8a9b0f;
+        animation: arc 12s linear;
+        animation-name: arc, col;
+      }
+      @keyframes arc {
+        0% {
+          stroke-dashoffset: 0px;
+        }
+      }
+      @keyframes col {
+        0% {
+          stroke: #8a9b0f;
+        }
+        25% {
+          stroke: #f8ca00;
+        }
+        50% {
+          stroke: #e97f02;
+        }
+        75% {
+          stroke: #bd1550;
+        }
+        100% {
+          stroke: #490a3d;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="countdown" style="height: 50px; width: 50px">
+      <svg viewBox="-50 -50 100 100" stroke-width="10">
+        <circle r="45"></circle>
+        <circle
+          r="45"
+          stroke-dasharray="282.7433388230814"
+          stroke-dashoffset="282.7433388230814px"
+        ></circle>
+      </svg>
+    </div>
+    <div style="display: flex; justify-content: space-between">
+      <div class="palette">
+        <button
+          class="color"
+          style="background: url(./image/red_color.png)"
+        ></button>
+        <button
+          class="color"
+          style="background: url(./image/green_color.png)"
+        ></button>
+        <button
+          class="color"
+          style="background: url(./image/black_color.png)"
+        ></button>
+        <button
+          class="color"
+          style="background: url(./image/yellow_color.png)"
+        ></button>
+        <button
+          class="color"
+          style="background: url(./image/brown_color.png)"
+        ></button>
+        <button
+          style="
+            background: url(./image/add_color.png);
+            width: 27.11px;
+            height: 32.64px;
+          "
+        ></button>
+
+        <div class="arrow-container">
+          <button
+            style="
+              background: url(./image/left_arrow.png);
+              width: 16.83px;
+              height: 15.91px;
+            "
+          ></button>
+          <button
+            style="
+              background: url(./image/right_arrow.png);
+              width: 16.83px;
+              height: 15.91px;
+            "
+          ></button>
+        </div>
+      </div>
+      <div class="palette">
+        <button
+          class="method-button"
+          style="
+            background: url(./image/method_palette/rectangle_button.jpg);
+            background-size: cover;
+          "
+        ></button>
+        <button
+          class="method-button"
+          style="
+            background: url(./image/method_palette/ellipse_button.jpg);
+            background-size: cover;
+          "
+        ></button>
+        <button
+          class="method-button"
+          style="
+            background: url(./image/method_palette/line_button.jpg);
+            background-size: cover;
+          "
+        ></button>
+        <button
+          class="method-button"
+          style="
+            background: url(./image/method_palette/brush_button.jpg);
+            background-size: cover;
+          "
+        ></button>
+        <button
+          class="method-button"
+          style="
+            background: url(./image/method_palette/paint_button.jpg);
+            background-size: cover;
+          "
+        ></button>
+        <button
+          class="method-button"
+          style="
+            background: url(./image/method_palette/eraser_button.jpg);
+            background-size: cover;
+          "
+        ></button>
+      </div>
+    </div>
+  </body>
+</html>
