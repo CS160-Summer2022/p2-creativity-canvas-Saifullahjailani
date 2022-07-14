@@ -18,8 +18,16 @@ function Brush(style) {
         this.path = path;
     }
 
+    this.getShape = function(){
+        return this.path;
+    }
+
     this.onMouseDrag = function (event) {
         this.path.add(event.point);
+    }
+
+    this.onMouseUp = function(event){
+        
     }
 }
 
@@ -32,6 +40,10 @@ function Rectangle(style) {
         this.shape.style = this.style;
 
 
+    }
+
+    this.getShape = function(){
+        return this.shape;
     }
 
     this.onMouseDrag = function (event) {
@@ -75,6 +87,10 @@ function Ellipse(style) {
         this.shape.style = this.style;
     }
 
+    this.getShape = function(){
+        return this.shape;
+    }
+
     this.onMouseUp = function(event){
         
     }
@@ -100,6 +116,10 @@ function Line(style) {
         this.shape.style = this.style;
     }
 
+    this.getShape = function(){
+        return this.shape;
+    }
+
     this.onMouseUp = function(event){
         
     }
@@ -112,6 +132,9 @@ function Select() {
     this.resize = false;
     this.selected = false;
 
+    this.getShape = function(){
+        return null;
+    }
 
     this.onMouseDown = function (event) {
 
@@ -130,14 +153,7 @@ function Select() {
             
 
             this.item = res.item;
-            this.bounds = new Path.Rectangle(this.item.strokeBounds);
-            this.bounds.strokeWidth = 3;
-            this.bounds.strokeColor = "blue";
-            this.bounds.strokeCap = "round";
-            this.bounds.dashArray = [10, 12];
-            this.bounds.selected = true;
-
-            this.selected = true;
+            this.selectShape(this.item);
 
 
         }
@@ -155,6 +171,25 @@ function Select() {
             this.bounds.remove();
         }
 
+
+
+    
+    
+    }
+
+    this.deselectShape = function(){
+        this.bounds.remove();
+    }
+
+    this.selectShape = function(item){
+        this.bounds = new Path.Rectangle(item.strokeBounds);
+        this.bounds.strokeWidth = 3;
+        this.bounds.strokeColor = "blue";
+        this.bounds.strokeCap = "round";
+        this.bounds.dashArray = [10, 12];
+        this.bounds.selected = true;
+
+        this.selected = true;
     }
 
     this.onMouseDrag = function (event) {
@@ -217,46 +252,12 @@ function Circle(style) {
         this.shape.remove();
     }
 
+    this.getShape = function(){
+        return this.circle;
+    }
+
 }
 
-var v = new Circle({
-    strokeWidth: 10,
-    strokeColor: "black",
-})
-var s = new Select();
-
-var b = v;
-
-var path;
-var currentColor = 'black'
-var currentWidth = 5
-
-tool.onMouseDown = function (event) { //This code in this function is called whenever the mouse is clicked.
-    b.onMouseDown(event);
-}
-tool.onMouseDrag = function (event) {
-    b.onMouseDrag(event);
-}
-tool.onMouseUp = function(event){
-    b.onMouseUp(event);
-}
-
-var curr = v;
-var next = b;
-
-$("#default").click(function () {
-    b = s;
-});
-
-$("#thick-green").click(function () {
-    b = v;
-});
-
-
-
-/*
-<input type="file" id="input" multiple>
-*/
 
 var inp = document.createElement("input");
 inp.type = 'file';
@@ -277,3 +278,218 @@ inp.style.display = 'none';
 $("#sub").click(function(e){
     inp.click();
 });
+
+
+
+//////////////////////////////
+
+//Main Logic
+
+
+
+var items = [new Brush({ strokeColor: "black", strokeWidth: 10}), new Rectangle({ strokeColor: "black", strokeWidth: 10}), new Ellipse({ strokeColor: "black", strokeWidth: 10}), new Circle({ strokeColor: "black", strokeWidth: 10}), new Line({ strokeColor: "black", strokeWidth: 10}), new Select({ strokeColor: "black", strokeWidth: 10}), new Brush({ strokeColor: "white", strokeWidth: 20}), new Brush({ strokeColor: "red", strokeWidth: 20})];
+
+var active = 0;
+
+tool.onMouseDown = function (event) { //This code in this function is called whenever the mouse is clicked.
+    items[active].onMouseDown(event);
+}
+tool.onMouseDrag = function (event) {
+    items[active].onMouseDrag(event);
+}
+tool.onMouseUp = function(event){
+    items[active].onMouseUp(event);
+}
+
+
+
+////// Button Press
+
+$("#brush").click(function(event){
+    active = 0;
+    $("#my-canvas").css("cursor", "crosshair");
+    displayStroke(0);
+});
+
+$("#rect").click(function(event){
+    active = 1;
+    $("#my-canvas").css("cursor", "crosshair");
+    displayStroke(0);
+});
+
+$("#ellipse").click(function(event){
+    active = 2;
+    $("#my-canvas").css("cursor", "crosshair");
+    displayStroke(0);
+});
+
+$("#circle").click(function(event){
+    active = 3;
+    $("#my-canvas").css("cursor", "crosshair");
+    displayStroke(0);
+});
+
+$("#line").click(function(event){
+    active = 4;
+    $("#my-canvas").css("cursor", "crosshair");
+    displayStroke(0);
+});
+
+$("#select").click(function(event){
+    active = 5;
+    $("#my-canvas").css("cursor", "move");
+    displayStroke(0);
+});
+
+$("#eraser").click(function(event){
+    active = 6;
+    $("#my-canvas").css("cursor", "crosshair");
+    displayStroke(0);
+});
+$("#paint").click(function(event){
+    active = 7;
+    $("#my-canvas").css("cursor", "crosshair");
+    displayStroke(0);
+});
+
+
+
+$(".color").click(function(event){ 
+    var color = this.style.backgroundColor;
+    var shape = items[active];
+    var style = shape.style;
+    style.strokeColor = color;
+});
+
+var stroke = 10;
+
+
+function displayStroke(add){
+    stroke = items[active].style.strokeWidth;
+    stroke+=add;
+    $("#stroke").text(stroke);
+    var shape = items[active];
+    var style = shape.style;
+    style.strokeWidth = stroke;
+}
+function set_stroke(){
+    var shape = items[active];
+    shape.style.strokeWidth = stroke;
+    var shape = items[active];
+    shape.style.strokeWidth = stroke;
+}
+$("#left-arrow").mousedown(function(event){
+        if (stroke >= 0){
+            displayStroke(-1);
+        }
+})
+
+$("#right-arrow").mousedown(function(event){
+    if (stroke <= 50){
+        displayStroke(1);
+    }
+})
+
+var color = null;
+$(".color").dblclick(function(event){
+    $(".rgbmenue").css("opacity", "1");
+    $(".rgbmenue").css("z-index", "3");
+    color = this;
+});
+
+function closeRGBMenu(){
+    $(".rgbmenue").css("opacity", "0");
+    $(".rgbmenue").css("z-index", "-3");
+}
+
+$("#ok").click(function (event) {  
+    var c = r + "," + g + "," + b + "," + a;
+   c = "rgba(" + c + ")";
+   $(color).css("background-color", c);
+   closeRGBMenu();
+});
+
+$("#close-rgb").click(function (event) {  
+    $(".rgbmenue").css("opacity", "0");
+    $(".rgbmenue").css("z-index", "-3");
+});
+
+$("#add").click(function(event){
+    
+    var c = r + "," + g + "," + b + "," + a;
+   c = "rgba(" + c + ")";
+    var elem = $(".color")[1];
+    elem = $(elem).clone();
+    elem.css("background-color", "white");
+    $(elem).bind("click", function(){
+        var color = this.style.backgroundColor;
+        var shape = items[active];
+        var style = shape.style;
+        style.strokeColor = color;
+    })
+    $(elem).bind("dblclick", function(){
+        $(".rgbmenue").css("opacity", "1");
+        $(".rgbmenue").css("z-index", "3");
+        color = this;
+    })
+    $(".color_collection").append(elem);
+});
+
+
+
+function gameOver(){
+    clearInterval(interval);
+
+}
+
+var countdownNumberEl = document.getElementById('countdown-number');
+var countdown = 60;
+
+
+
+countdownNumberEl.textContent = countdown;
+
+var interval = setInterval(function () {
+    if(countdown <= 1){
+        gameOver();
+    }
+  countdown--;
+
+  countdownNumberEl.textContent = countdown;
+}, 1000);
+
+var r = 128;
+var g = 128;
+var b = 128;
+var a = 1;
+
+$("#input_red").click(function(event){
+    r = $("#input_red").val()
+    $("#red_out").text(r);
+    set_b();
+});
+
+$("#input_green").click(function(event){
+    g = $("#input_green").val()
+    $("#green_out").text(g);
+    set_b();
+});
+
+$("#input_blue").click(function(event){
+    b = $("#input_blue").val()
+    $("#blue_out").text(b);
+    set_b();
+});
+
+$("#input_alpha").click(function(event){
+    a = $("#input_alpha").val()
+    $("#alpha_out").text(a);
+    set_b();
+});
+
+function set_b(){
+   var c = r + "," + g + "," + b + "," + a;
+   c = "rgba(" + c + ")";
+   $("#ok").css("background-color", c);
+}
+
