@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="3;url=canvas_edited.html" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      svg {
+        grid-column: 1;
+        grid-row: 1;
+      }
+
+      [r] {
+        fill: none;
+        stroke: silver;
+      }
+
+      [r] + [r] {
+        transform: rotate(-90deg);
+        stroke-linecap: round;
+        stroke: #8a9b0f;
+        animation: arc 12s linear;
+        animation-name: arc, col;
+      }
+
+      @keyframes arc {
+        0% {
+          stroke-dashoffset: 0px;
+        }
+      }
+
+      @keyframes col {
+        0% {
+          stroke: #8a9b0f;
+        }
+
+        25% {
+          stroke: #f8ca00;
+        }
+
+        50% {
+          stroke: #e97f02;
+        }
+
+        75% {
+          stroke: #bd1550;
+        }
+
+        100% {
+          stroke: #490a3d;
+        }
+      }
+
+      #countdown {
+        position: relative;
+        margin: auto;
+        margin-top: 10px;
+        height: 40px;
+        width: 40px;
+        text-align: center;
+      }
+
+      #countdown-number {
+        color: Black;
+        display: inline-block;
+        line-height: 40px;
+      }
+
+      svg {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 40px;
+        height: 40px;
+        transform: rotateY(-180deg) rotateZ(-90deg);
+      }
+
+      svg circle {
+        stroke-dasharray: 113px;
+        stroke-dashoffset: 0px;
+        stroke-linecap: round;
+        stroke-width: 2px;
+        stroke: black;
+        fill: none;
+        animation: countdown 60s linear infinite forwards;
+      }
+
+      @keyframes countdown {
+        from {
+          stroke-dashoffset: 0px;
+        }
+
+        to {
+          stroke-dashoffset: 113px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="container"
+      style="display: flex; flex-direction: column; align-items: center"
+    >
+      <div class="top_middle">
+        <div id="countdown">
+          <div id="countdown-number"></div>
+          <svg>
+            <circle r="18" cx="20" cy="20"></circle>
+          </svg>
+        </div>
+      </div>
+      <script>
+        var countdownNumberEl = document.getElementById("countdown-number");
+        var countdown = 60;
+
+        countdownNumberEl.textContent = countdown;
+
+        setInterval(function () {
+          countdown = --countdown <= 0 ? 60 : countdown;
+
+          countdownNumberEl.textContent = countdown;
+        }, 1000);
+      </script>
+      <img
+        src="./image/reference_image.png"
+        style="width: 306px; height: 407px"
+      />
+      <p style="font-size: large">
+        You have 1 minute to analyze the reference image.
+      </p>
+    </div>
+  </body>
+</html>

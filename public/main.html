@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="css/canvas.css">
     <!-- Load the Paper.js library (from http://paperjs.org/) -->
     <script type="text/javascript" src="js/paper-full.js"></script>
     <!-- add Bootstrap 4 (from https://getbootstrap.com/docs/4.0/getting-started/download/)-->
@@ -42,6 +43,7 @@
       }
     </style>
   </head>
+  <body style="padding: 70px">
   <div class="button-container">
     <img src="./image/App_logo.png" style="height: 301px; width: 301px" />
     <h1>Quick Sketch</h1>
@@ -49,21 +51,26 @@
 
   <div class="container">
     <div class="button-container">
-      <button
-        type="button"
-        style="
-          background: url(./image/3minutes_logo.png);
-          width: 136.75px;
-          height: 103.7px;
-        "
-      ></button>
+      <a href="view_reference.html">
+        <button
+          type="button"
+          style="
+            background: url(./image/3minutes_logo.png);
+            width: 136.75px;
+            height: 103.7px;
+            border: none;
+          "
+        ></button>
+      </a>
       <p>3 Minutes Drawing</p>
     </div>
     <div class="button-container">
       <button
         type="button"
+        id="infinite"
         style="
           background: url(./image/infinite_logo.png);
+          border: none;
           width: 162px;
           height: 146.7px;
         "
@@ -77,9 +84,40 @@
           background: url(./image/load_canvas_logo.png);
           width: 163.56px;
           height: 119.53px;
+          border: none;
         "
+        id="load"
       ></button>
       <p>Load Canvas</p>
     </div>
   </div>
+
+  <script>
+    var inp = document.createElement("input");
+  inp.type = 'file';
+  inp.name = 'file';
+  inp.id = "input";
+
+  var item;
+  
+  inp.addEventListener('change', function(e){
+      console.log(inp.files);
+      var reader = new FileReader();
+      reader.onload = function () {
+         item = reader.result;
+      }
+        reader.readAsText(inp.files[0]);
+  });
+
+
+  $("#load").click(function(){
+    window.localStorage.setItem("svg", item);
+
+  });
+
+
+
+  </script>
+
+</body>
 </html>

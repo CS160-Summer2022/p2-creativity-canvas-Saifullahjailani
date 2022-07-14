@@ -117,6 +117,10 @@ svg circle {
   animation: countdown 60s linear infinite forwards;
 }
 
+
+.pre{
+  animation: countdown 20s linear infinite forwards;
+}
 @keyframes countdown {
   from {
     stroke-dashoffset: 0px;
