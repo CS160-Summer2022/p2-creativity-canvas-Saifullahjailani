@@ -24,54 +24,45 @@
   <!--add the Google Material Symbols Font (from https://fonts.google.com/icons ) -->
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-
+  <style>
+    .imgg{
+      height: 100%;
+      width: 100%;
+    }
+  </style>
   <!-- Link to our Paperscript file containing our custom drawing app code, and associate it with the "my-canvas" Canvas Object defined in the HTML layout below-->
 </head>
 
 <body style="display: flex;flex-direction: column; align-items: center; margin-top: 50px ;height:100vh; width:100vw;">
-  <div class="top_middle" style="width: 200px; height: 200px">
-    <div id="countdown">
-      <div id="countdown-number"></div>
-      <svg class="pre">
-        <circle class="pre" r="18" cx="20" cy="20"></circle>
-      </svg>
+  <p style="font-size: 30px;">Please! Compare your drawing with the refereence.</p>
+  <div style="display: flex; flex-direction:row; justify-content: space-between; padding: 5px; width: 100%;">
+    <div class="left" style="height: 400px; width: 300px; border: 2px solid black;">
+  
     </div>
+    <div class="center" style="display: flex; flex-direction:column; justify-content: space-evenly;">
+      <button id="main">Return To Main Menu</button>
+      <button id="pre">Try Again</button>
+    </div>
+    <div class="right">
+      <img src="/image/reference_image.png" style="height: 400px; width: 300px"> 
+    </div>
+
   </div>
 
-  <p style="font-size: 30px;">Analyze the Referene for 20s. The game will start shortly. You have to draw 
-    and compare your drawing.
-  </p>
-
-  <div style="display: flex; flex-direction: row; justify-content: center;">
-    <img src="/image/reference_image.png">
-  </div>
-  <script>
-
-
-function gameOver(){
-  window.location.href = "fast_drawing.html"
-
-}
-
-var countdownNumberEl = document.getElementById('countdown-number');
-var countdown = 20;
-
-
-
-countdownNumberEl.textContent = countdown;
-
-var interval = setInterval(function () {
-    if(countdown <= 1){
-        clearInterval(interval);
-        gameOver();
-    }
-  countdown--;
-
-  countdownNumberEl.textContent = countdown;
-}, 1000);
-
-
-  </script>
 </body>
+<script>
+  var svg = window.localStorage.getItem("svg");
+  var elem = document.createElement("img");
+  elem.src = svg;
+  elem.style.height = "100%";
+  elem.style.width = "100%";
+  $(".left").append(elem);
 
+  $("#main").click(function(){
+    window.location.href = "index.html"
+  })
+  $("#pre").click(function(){
+    window.location.href = "fast_drawingScreen_pre.html"
+  })
+</script>
 </html>

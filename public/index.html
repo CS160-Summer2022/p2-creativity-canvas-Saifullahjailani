@@ -1,12 +1,8 @@
-<!-- Starter code for Project 2: Creativity Canvas!-->
-<!-- Lovingly prepared by Shm Garanganao Almeda-->
-<!-- for CS160 User Interface Design & Development Summer 2022 at UC Berkeley-->
-<!-- You are not required to use ANY of this example code. I just thought it might be helpful to have something to work off of. -->
-<!-- Watch Lecture 6.5 (from July 05, 2022) for a recorded live coding demo where you can see how this code was written from start to finish. -->
-
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="css/canvas.css">
+    
     <!-- Load the Paper.js library (from http://paperjs.org/) -->
     <script type="text/javascript" src="js/paper-full.js"></script>
     <!-- add Bootstrap 4 (from https://getbootstrap.com/docs/4.0/getting-started/download/)-->
@@ -26,43 +22,112 @@
       href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
     />
 
-    <!-- Link to our Paperscript file containing our custom drawing app code, and associate it with the "my-canvas" Canvas Object defined in the HTML layout below-->
-    <script
-      type="text/paperscript"
-      src="js/my-drawing-app.js"
-      canvas="my-canvas"
-    ></script>
-
-    
 
 
+    <style>
+      .button-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .container {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        justify-content: space-between;
+      }
+    </style>
   </head>
+  <body style="padding: 70px">
+  <div class="button-container">
+    <img src="./image/App_logo.png" style="height: 301px; width: 301px" />
+    <h1>Quick Sketch</h1>
+  </div>
 
-  <body>
-    <!-- Our row of buttons -->
-    <a href="main.html">Go to Main Page</a>
-    <a href="canvas_edited.html">Go to Canvas Page</a>
-    <a href="fast_drawingScreen_pre.html">Go to Canvas  pre Page</a>
-    <button type="button" class="btn" id="default">
-      <span class="material-symbols-outlined"> edit</span>
-    </button>
+  <div class="container">
+    <div class="button-container">
+        <button
+          id="3minute"
+          type="button"
+          style="
+            background: url(./image/3minutes_logo.png);
+            width: 136.75px;
+            height: 103.7px;
+            border: none;
+          "
+        ></button>
+      </a>
+      <p>3 Minutes Drawing</p>
+    </div>
+    <div class="button-container">
+      <button
+        type="button"
+        id="infinite"
+        style="
+          background: url(./image/infinite_logo.png);
+          border: none;
+          width: 162px;
+          height: 146.7px;
+        "
+      ></button>
+      <p>Infinite time Drawing</p>
+    </div>
+    <div class="button-container">
+      <button
+        type="button"
+        style="
+          background: url(./image/load_canvas_logo.png);
+          width: 163.56px;
+          height: 119.53px;
+          border: none;
+        "
+        id="load"
+      ></button>
+      <p>Load Canvas</p>
+    </div>
+  </div>
 
-    <button type="button" class="btn btn-success" id="thick-green">
-      <span class="material-symbols-outlined">format_paint</span>
-    </button>
+  <script>
+    var inp = document.createElement("input");
+  inp.type = 'file';
+  inp.name = 'file';
+  inp.id = "input";
 
-    <button type="button" class="btn" id="eraser">
-      <span class="material-symbols-outlined">circle</span>
-    </button>
+  var item;
+  
+  inp.addEventListener('change', function(e){
+      console.log(inp.files);
+      var reader = new FileReader();
+      reader.onload = function () {
+         item = reader.result;
+         window.localStorage.setItem("turnoffInterval", "t");
+          window.localStorage.setItem("load", "t");
+          window.localStorage.setItem("svg", item);
+    if(item != null){
+        window.location.href = "canvas.html";
+      }
+      }
+        reader.readAsText(inp.files[0]);
+  });
 
-    <input type="file" id="input" multiple>
-    <button id = "sub">Submit</button>
 
-    <br />
-    <!-- I used a simple line break here, but you might want to consider using a more sophisticated layout/formatting solution (e.g. Bootstrap rows and columns), especially if there's a lot of elements you want to cleanly organize, position, and format in your app. -->
+  $("#load").click(function(){
+    inp.click();
+
+
     
+  });
 
-    <canvas id="my-canvas" width="800" height="600"></canvas>
-    <!-- our Canvas object -->
-  </body>
+  $("#3minute").click(function(){
+    window.location.href = "fast_drawingScreen_pre.html";
+  })
+  $("#infinite").click(function(){
+    window.localStorage.setItem("turnoffInterval", "t");
+    window.location.href = "canvas.html";
+  })
+
+  </script>
+
+</body>
 </html>

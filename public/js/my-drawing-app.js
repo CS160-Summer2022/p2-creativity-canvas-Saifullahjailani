@@ -242,7 +242,6 @@ function Circle(style) {
 
 
         var dist = this.end - this.start;
-        console.log(dist.length);
         this.circle = new Path.Circle(this.start, dist.length);
         this.circle.style = this.style;
 
@@ -259,25 +258,8 @@ function Circle(style) {
 }
 
 
-var inp = document.createElement("input");
-inp.type = 'file';
-inp.name = 'file';
-inp.id = "input";
 
-inp.addEventListener('change', function(e){
-    console.log(inp.files);
-    var reader = new FileReader();
-    reader.onload = function () {
-        project.importSVG(reader.result);
-    }
-      reader.readAsText(inp.files[0]);
-});
 
-inp.style.display = 'none';
-
-$("#sub").click(function(e){
-    inp.click();
-});
 
 
 
@@ -439,15 +421,17 @@ $("#add").click(function(event){
 
 function gameOver(){
     clearInterval(interval);
+    var url = "data:image/svg+xml;utf8," + encodeURIComponent(paper.project.exportSVG({asString:true}));
+    window.localStorage.setItem("svg", url);
+    window.location.href = "fast_drawingScreen_post.html";
 
 }
 
-var countdownNumberEl = document.getElementById('countdown-number');
-var countdown = 60;
+var countdownNumberEl;
+var countdown;
 
 
 
-countdownNumberEl.textContent = countdown;
 
 var interval = setInterval(function () {
     if(countdown <= 1){
@@ -493,3 +477,69 @@ function set_b(){
    $("#ok").css("background-color", c);
 }
 
+if(window.localStorage.getItem("turnoffInterval") == "t"){
+    clearInterval(interval);
+    
+}else{
+    countdownNumberEl = document.getElementById('countdown-number');
+    countdown = 60;
+countdownNumberEl.textContent = countdown;
+}
+
+var counterSave = 1;
+$("#save").click(function(){
+    download("untitled"+counterSave);
+    counterSave++;
+})
+
+$("#show_save_exit").click(function(){
+    $(".exit").show();
+})
+
+$("#close-exit").click(function(){
+    $(".exit").hide();
+})
+
+$("#yes").click(function(){
+    $("#save").click();
+    $("#no").click()
+})
+$("#no").click(function(){
+    window.location.href = "index.html";
+})
+$("#show_ref").click(function(){
+    $(".ref").show();
+})
+$("#close-ref").click(function(){
+    $(".ref").hide();
+})
+
+
+$(".exit").hide();
+$(".ref").hide();
+
+
+var inp = document.createElement("input");
+inp.type = 'file';
+inp.name = 'file';
+inp.id = "input";
+
+
+
+
+inp.addEventListener('change', function(e){
+    var reader = new FileReader();
+    reader.onload = function () {
+        project.importSVG(reader.result);
+    }
+      reader.readAsText(inp.files[0]);
+});
+
+inp.style.display = 'none';
+
+
+if(window.localStorage.getItem("load") == 't'){
+    
+        project.importSVG(window.localStorage.getItem("svg"));
+    
+}
