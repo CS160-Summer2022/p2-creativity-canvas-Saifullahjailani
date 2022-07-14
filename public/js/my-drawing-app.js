@@ -258,8 +258,12 @@ $("#thick-green").click(function () {
 <input type="file" id="input" multiple>
 */
 
-var inp = document.getElementById("input");
-input.addEventListener('change', function(e){
+var inp = document.createElement("input");
+inp.type = 'file';
+inp.name = 'file';
+inp.id = "input";
+
+inp.addEventListener('change', function(e){
     console.log(inp.files);
     var reader = new FileReader();
     reader.onload = function () {
@@ -269,7 +273,7 @@ input.addEventListener('change', function(e){
 });
 
 inp.style.display = 'none';
-/*Change sub to the id of the clickable load icon*/
+
 $("#sub").click(function(e){
     inp.click();
 });

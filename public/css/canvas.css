@@ -1,0 +1,163 @@
+
+/* button {
+    border: none;
+  } */
+.palette {
+  background-color: gainsboro;
+  height: 416.45px;
+  width: 56.52px;
+  margin: 14px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.color {
+  width: 47.66px;
+  height: 48.7px;
+}
+
+.arrow-container {
+  display: flex;
+  height: 30px;
+}
+
+.method-button {
+  width: 50.09px;
+  height: 50.09px;
+}
+
+
+
+
+svg {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+[r] {
+  fill: none;
+  stroke: silver;
+}
+
+[r]+[r] {
+  transform: rotate(-90deg);
+  stroke-linecap: round;
+  stroke: #8a9b0f;
+  animation: arc 12s linear;
+  animation-name: arc, col;
+}
+
+@keyframes arc {
+  0% {
+    stroke-dashoffset: 0px;
+  }
+}
+
+@keyframes col {
+  0% {
+    stroke: #8a9b0f;
+  }
+
+  25% {
+    stroke: #f8ca00;
+  }
+
+  50% {
+    stroke: #e97f02;
+  }
+
+  75% {
+    stroke: #bd1550;
+  }
+
+  100% {
+    stroke: #490a3d;
+  }
+}
+
+
+#countdown {
+  position: relative;
+  margin: auto;
+  margin-top: 10px;
+  height: 40px;
+  width: 40px;
+  text-align: center;
+}
+
+#countdown-number {
+  color: Black;
+  display: inline-block;
+  line-height: 40px;
+}
+
+svg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 40px;
+  height: 40px;
+  transform: rotateY(-180deg) rotateZ(-90deg);
+}
+
+svg circle {
+  stroke-dasharray: 113px;
+  stroke-dashoffset: 0px;
+  stroke-linecap: round;
+  stroke-width: 2px;
+  stroke: black;
+  fill: none;
+  animation: countdown 60s linear infinite forwards;
+}
+
+@keyframes countdown {
+  from {
+    stroke-dashoffset: 0px;
+  }
+
+  to {
+    stroke-dashoffset: 113px;
+  }
+}
+
+
+body{
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    padding: 0;
+}
+
+#my-canvas{
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.top_middle{
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    z-index: -1;
+}
+
+.left_box{
+    position: fixed;
+    top: 0;
+    left: 0;
+    margin: 0;
+    margin-top: 15%;
+    margin-left: 10px;
+}
+
+.right_box{
+    position: fixed;
+    margin-left: 0;
+    margin-right: 10px;
+    top: 0;
+    right: 0;
+    margin-top: 15%;
+}
