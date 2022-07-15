@@ -114,12 +114,10 @@
 
   $("#load").click(function(){
     inp.click();
-
-
-    
   });
 
   $("#3minute").click(function(){
+    window.localStorage.removeItem("turnoffInterval");
     window.location.href = "fast_drawingScreen_pre.html";
   })
   $("#infinite").click(function(){

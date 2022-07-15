@@ -483,7 +483,7 @@ if(window.localStorage.getItem("turnoffInterval") == "t"){
 }else{
     countdownNumberEl = document.getElementById('countdown-number');
     countdown = 60;
-countdownNumberEl.textContent = countdown;
+    countdownNumberEl.textContent = countdown;
 }
 
 var counterSave = 1;
@@ -519,27 +519,42 @@ $(".exit").hide();
 $(".ref").hide();
 
 
+
+
+
+if(window.localStorage.getItem("load") == 't'){
+        project.importSVG(window.localStorage.getItem("svg"));
+        window.localStorage.removeItem("load");
+} else{
+    project.clear();
+}
+
+
 var inp = document.createElement("input");
 inp.type = 'file';
 inp.name = 'file';
 inp.id = "input";
 
 
-
-
 inp.addEventListener('change', function(e){
     var reader = new FileReader();
     reader.onload = function () {
-        project.importSVG(reader.result);
+        document.getElementById("my_ref").src = reader.result;
     }
-      reader.readAsText(inp.files[0]);
+      reader.readAsDataURL(inp.files[0]);
 });
 
 inp.style.display = 'none';
 
 
-if(window.localStorage.getItem("load") == 't'){
+$("#load_ref").click(function(){
+    inp.click();
+    $(".ref").show();
     
-        project.importSVG(window.localStorage.getItem("svg"));
+})
+
+$("#grayscale").click(function(){
+    $("#my_ref").css("filter", "grayscale(0)");
     
-}
+})
+
