@@ -1,8 +1,6 @@
-[functions]
-external_node_modules = ["express"]
-node_bundler = "esbuild"
-[[redirects]]
-force = true
-from = "/api/*"
-status = 200
-to = "/.netlify/functions/api/:splat"
+[build]
+command = "npm install" # Adjust this based on your project's build setup
+publish = "public"      # The folder to publish
+
+[dev]
+command = "npm run start" # Your development server start command
