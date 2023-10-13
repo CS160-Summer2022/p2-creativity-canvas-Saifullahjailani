@@ -1,0 +1,41 @@
+# Node modules and npm/yarn lock files
+node_modules/
+package-lock.json
+yarn.lock
+
+# Compiled output
+/dist/
+/build/
+/output/
+
+# Log files
+npm-debug.log
+yarn-error.log
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.development
+.env.test
+.env.staging
+.env.production
+
+# IDE/Editor specific files and folders
+.idea/
+.vscode/
+*.sublime-*
+*.suo
+*.ntvs*
+
+# Compiled TypeScript files
+*.js
+*.js.map
+
+# Compiled SASS files
+*.css
+*.css.map
+
+# Miscellaneous
+.DS_Store
+Thumbs.db
